@@ -1,153 +1,152 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
-class node{
+class node {
     public:
     string data;
     node* next;
-    node(string d){
+    node(string d) {
         data = d;
         next = NULL;
     }
 };
 
-class linkedlist{
+class linkedlist {
+    public:
     node* head = NULL;
 
-    bool is_empty(){
+    bool is_empty() {
         return head == NULL;
     }
 
-    void insertatbeginning(string value){
-        if(is_empty()){
+    void insertatbeginning(string value) {
+        if (is_empty()) {
             node* newnode = new node(value);
-            head = newnode ;
+            head = newnode;
             newnode->next = NULL;
-        }
-        else{
+        } else {
             node* newnode = new node(value);
-            newnode -> next = head;
+            newnode->next = head;
             head = newnode;
         }
     }
-    
-    void insertatend(string value){
-        if(is_empty()){
-            node* newnode = new node(value);
-            head = newnode ;
-            newnode->next = NULL;
-        }
-        else{
+
+    void insertatend(string value) {
+        node* newnode = new node(value);
+        if (is_empty()) {
+            head = newnode;
+        } else {
             node* temp;
             temp = head;
-            while(temp){
+            while (temp->next != NULL) {
                 temp = temp->next;
             }
-            node* newnode = new node(value);
             newnode->next = NULL;
             temp->next = newnode;
         }
     }
-    
-    void insertatposition(string value,int position){
-      if (position < 1) {
-        cout << "Position must be greater than 0." << endl;
-        return;
+
+    void insertatposition(string value, int position) {
+        if (position < 1) {
+            return;
+        }
+
+        node* newnode = new node(value);
+        if (is_empty()) {
+            if (position == 1) {
+                head = newnode;
+                newnode->next = NULL;
+            } else {
+                delete newnode;
+            }
+            return;
+        } else if (position == 1) {
+            newnode->next = head;
+            head = newnode;
+        } else {
+            node* temp;
+            temp = head;
+            for (int i = 1; i < position - 1; i++) {
+                if (temp->next == NULL) {
+                    break;
+                }
+                temp = temp->next;
+            }
+            newnode->next = temp->next;
+            temp->next = newnode;
+        }
     }
 
-    node* newnode = new node(value);
-     if (is_empty()) {
-        if (position == 1) {
-            head = newnode;
-            newnode->next = NULL;
+    void deletefirst() {
+        if (is_empty()) {
+            return;
         } else {
-            cout << "Invalid position. List is empty." << endl;
-            delete newnode; // Avoid memory leak
+            node* temp = head;
+            head = head->next;
+            delete temp;
         }
-        return;
     }
-    else if(position == 1){
-    newnode -> next = head;
-    head = newnode;
-    }
-    else{
-        node* temp;
-        temp = head;
-        for(int i = 1; i < position -1; i++){
-            if(temp->next == NULL){
-                break;
-            }
+
+    void deletelast() {
+        if (is_empty()) {
+            return;
+        }
+
+        if (head->next == NULL) {
+            delete head;
+            head = NULL;
+            return;
+        }
+
+        node* temp = head;
+        while (temp->next->next != NULL) {
             temp = temp->next;
         }
-        newnode->next = temp->next;
-        temp->next = newnode;
-        
-    }
-    }
 
-    void deletefirst(){
-        
-        if(is_empty()){
-            cout << "list is empty!";
-            return;
-        }
-        else{
-        node* temp = head;
-        head = head->next;
-        delete temp;
-    }
-    }
-
-    void deletelast(){
-        if(is_empty()){
-            cout << "list is empty!";
-            return;
-        }
-        else{
-            node* temp = head;
-            while(temp != NULL){
-                temp = temp->next->next;
-            }
-            delete temp->next;
-            temp->next = NULL;
-        } 
-    }
-
-    void deleteatposition(int position){
-    if (position < 1) {
-        cout << "Position must be greater than 0." << endl;
-        return;
-    }
-
-    if(position==1){
-        if(is_empty()){
-            cout << "list is empty!";
-            return;
-        }
-        deletefirst();
-    }
-    else{
-        if(is_empty()){
-            cout << "list is empty!";
-            return;
-        }
-        node* temp = head;
-        for(int i =1; i< position -1; i++){
-            temp = temp->next->next;
-        }
         delete temp->next;
         temp->next = NULL;
     }
+
+    void deleteatposition(int position) {
+        if (position < 1) {
+            return;
+        }
+
+        if (position == 1) {
+            deletefirst();
+            return;
+        }
+
+        if (is_empty()) {
+            return;
+        }
+
+        node* temp = head;
+        for (int i = 1; i < position - 1; i++) {
+            if (temp->next == NULL) {
+                return;
+            }
+            temp = temp->next;
+        }
+
+        if (temp->next == NULL) {
+            return;
+        }
+
+        node* to_delete = temp->next;
+        temp->next = temp->next->next;
+        delete to_delete;
     }
 
-    void display(){
+    void display() {
+        if (is_empty()) {
+            return;
+        }
         node* temp = head;
-        while(temp){
-            cout << temp->data << " -> " ;
+        while (temp) {
+            cout << temp->data << " -> ";
             temp = temp->next;
         }
         cout << "end";
     }
-    
 };
-
