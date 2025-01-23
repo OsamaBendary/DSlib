@@ -137,6 +137,36 @@ class linkedlist {
         temp->next = temp->next->next;
         delete to_delete;
     }
+    bool search(string value) {
+    node* temp = head;
+    while (temp != NULL) {
+        if (temp->data == value) {
+            cout << value << " found" << endl;
+            return true;
+        }
+        temp = temp->next;
+    }
+    cout << value << " not found" << endl;
+    return false;
+}
+void reverse() {
+    if (is_empty()) {
+        return;
+    }
+
+    node* prev = NULL;
+    node* current = head;
+    node* next = NULL;
+
+    while (current != NULL) {
+        next = current->next;
+        current->next = prev;
+        prev = current;
+        current = next;
+    }
+
+    head = prev;
+}
 
     void display() {
         if (is_empty()) {
@@ -147,6 +177,143 @@ class linkedlist {
             cout << temp->data << " -> ";
             temp = temp->next;
         }
-        cout << "end";
+        cout << "end" << endl;
     }
 };
+
+class stack : public linkedlist {
+    public:
+    node* top = NULL;
+
+    void push(string value) {
+        insertatbeginning(value);
+    }
+
+    void pop() {
+        deletefirst();
+    }
+
+    void display() {
+        linkedlist::display();
+    }
+};
+
+class queue : public linkedlist {
+    public:
+    node* front = NULL;
+    node* rear = NULL;
+
+    void enqueue(string value) {
+        insertatend(value);
+    }
+
+    void dequeue() {
+        deletefirst();
+    }
+
+    void display() {
+        linkedlist::display();
+    }
+};
+
+class nodet {
+    public:
+    string data;
+    nodet* left;
+    nodet* right;
+    nodet(string d) {
+        data = d;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+class tree {
+    public:
+    nodet* root = NULL;
+
+    void insert(string value) {
+        if (root == NULL) {
+            root = new nodet(value);
+        } else {
+            nodet* temp = root;
+            while (temp) {
+                if (value < temp->data) {
+                    if (temp->left == NULL) {
+                        temp->left = new nodet(value);
+                        break;
+                    } else {
+                        temp = temp->left;
+                    }
+                } else {
+                    if (temp->right == NULL) {
+                        temp->right = new nodet(value);
+                        break;
+                    } else {
+                        temp = temp->right;
+                    }
+                }
+            }
+        }
+    }
+
+    void inorder(nodet* temp) {
+        if (temp == NULL) {
+            return;
+        }
+        inorder(temp->left);
+        cout << temp->data << " ";
+        inorder(temp->right);
+    }
+
+    void preorder(nodet* temp) {
+        if (temp == NULL) {
+            return;
+        }
+        cout << temp->data << " ";
+        preorder(temp->left);
+        preorder(temp->right);
+    }
+
+    void postorder(nodet* temp) {
+        if (temp == NULL) {
+            return;
+        }
+        postorder(temp->left);
+        postorder(temp->right);
+        cout << temp->data << " ";
+    }
+    
+bool search(nodet* temp, string value) {
+    if (temp == NULL) {
+        cout << value << " not found" << endl;
+        return false;
+    }
+    if (temp->data == value) {
+        cout << value << " found" << endl;
+        return true;
+    }
+    if (value < temp->data) {
+        return search(temp->left, value);
+    } else {
+        return search(temp->right, value);
+    }
+}
+
+bool search(string value) {
+    return search(root, value);
+}
+
+    void display() {
+        cout << "Inorder: ";
+        inorder(root);
+        cout << endl;
+        cout << "Preorder: ";
+        preorder(root);
+        cout << endl;
+        cout << "Postorder: ";
+        postorder(root);
+        cout << endl;
+    }
+};
+
