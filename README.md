@@ -64,53 +64,52 @@ Below is an example of how to use DSlib in your project:
 
 #### `main.cpp`
 ```cpp
-#include "DS.h"
-#include <iostream>
+#include<iostream>
+#include"DS.cpp"
+using namespace std;
 
-int main() {
-    // Example usage of the Stack
-    Stack<int> stack;
-    stack.push(10);
-    stack.push(20);
-    stack.push(30);
+int main(){
+    linkedlist l1;
+    l1.insertatbeginning("1");
+    l1.insertatbeginning("2");
+    l1.insertatbeginning("3");
+    l1.insertatbeginning("4");
+    l1.insertatbeginning("5");
+    l1.insertatend("6");
+    l1.insertatposition("0",2);
+    l1.deleteatposition(2);
+    l1.deleteatposition(1);
+    l1.display();
+    l1.reverse();
+    l1.display();
+    l1.search("3");
+    l1.search("10");
+    l1.deletelast();
+    l1.display();
+    stack s1;
+    s1.push("1");
+    s1.push("2");
+    s1.push("3");
+    s1.pop();
+    s1.display();
 
-    std::cout << "Stack top: " << stack.peek() << std::endl;
-    stack.pop();
-    std::cout << "Stack top after pop: " << stack.peek() << std::endl;
+    queue q1;
+    q1.enqueue("1");
+    q1.enqueue("2");
+    q1.enqueue("3");
+    q1.dequeue();
+    q1.display();
 
-    // Example usage of the Queue
-    Queue<int> queue;
-    queue.enqueue(1);
-    queue.enqueue(2);
-    queue.enqueue(3);
-
-    std::cout << "Queue front: " << queue.peek() << std::endl;
-    queue.dequeue();
-    std::cout << "Queue front after dequeue: " << queue.peek() << std::endl;
-
-    // Example usage of the Binary Search Tree (BST)
-    BST<int> bst;
-    bst.insert(50);
-    bst.insert(30);
-    bst.insert(70);
-
-    std::cout << "BST contains 30: " << (bst.search(30) ? "Yes" : "No") << std::endl;
-
-    // Example usage of the Linked List
-    LinkedList<int> list;
-    list.insert(1);
-    list.insert(2);
-    list.insert(3);
-
-    std::cout << "Linked List contents: ";
-    list.traverse([](int value) { std::cout << value << " "; });
-    std::cout << std::endl;
-
-    list.remove(2);
-    std::cout << "Linked List after removing 2: ";
-    list.traverse([](int value) { std::cout << value << " "; });
-    std::cout << std::endl;
-
+    tree t1;
+    t1.insert("5");
+    t1.insert("3");
+    t1.insert("7");
+    t1.insert("2");
+    t1.insert("4");
+    t1.insert("6");
+    t1.insert("8");
+    t1.search("3");
+    t1.display();
     return 0;
 }
 ```
